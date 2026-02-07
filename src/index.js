@@ -9,6 +9,7 @@ import "./index.css";
 
 
 import { BrowserRouter } from 'react-router-dom';
+//import { AuthProvider } from './contexts/AuthContext';
 import { AuthProvider } from './contexts/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
