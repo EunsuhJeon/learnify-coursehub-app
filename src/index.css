@@ -33,8 +33,8 @@ button.btn.btn-learnify-enroll {
 
 a.btn.btn-learnify-enroll:hover,
 button.btn.btn-learnify-enroll:hover {
-  background-color: #8269e8;
-  border-color: #8269e8;
+  background-color: #412c94;
+  border-color: #412c94;
   color: #fff;
 }
 
@@ -61,4 +61,3 @@ button.btn.btn-learnify-login:hover {
   box-shadow: none;
   outline: none;
 }
-
