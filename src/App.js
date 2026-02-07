@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
 import MyCourses from "./pages/MyCourses";
+import ProtectedRoute from "./layouts/ProtectedRoute";
 
 function App() {
   return (
@@ -12,7 +13,10 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="courses" element={<Courses />} />
         <Route path="courses/:id" element={<CourseDetail />} />
-        <Route path="my-courses" element={<MyCourses />} />
+        
+        <Route element={<ProtectedRoute/>}>
+          <Route path="my-courses" element={<MyCourses />} />
+        </Route>
       </Route>
     </Routes>
   );
