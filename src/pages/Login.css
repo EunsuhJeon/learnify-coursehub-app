@@ -39,3 +39,46 @@
 }
 
 
+/* ===== COURSES HOME ===== */
+.courses-hero {
+  background: linear-gradient(
+    135deg,
+    #8269e8,
+    #9f65f3,
+    #aa56f5);
+}
+
+.courses-filter-card {
+  border-radius: 1.25rem;
+}
+
+.course-card {
+  overflow: hidden;
+}
+
+.course-thumb {
+  height: 110px;
+  background: linear-gradient(
+    135deg,
+    #8269e8,
+    #9f65f3,
+    #aa56f5);
+}
+
+.course-badge {
+  background: #5b06a5c9;
+  color: #ffffff;
+  border: 1px solid rgba(91, 79, 222, 0.18);
+  font-weight: 600;
+}
+
+.course-title {
+  line-height: 1.2;
+}
+
+.course-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

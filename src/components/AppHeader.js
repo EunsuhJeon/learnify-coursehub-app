@@ -65,7 +65,7 @@ export function AppHeader() {
               </NavLink>
 
               <NavLink
-                to="/enroll"
+                to="/courses"
                 className="btn btn-learnify-enroll rounded-pill px-4"
               >
                 Enroll now!

@@ -12,6 +12,7 @@ export function CoursesProvider({ children }) {
 
     const [searchQuery, setSearchQuery] = useState(null);
     const [levelFilter, setLevelFilter] = useState(null);
+    const [themeFilter, setThemeFilter] = useState(null);
 
     const fetchCourses = useCallback(async (force = false) =>{
         if(!force && hasFetched && courses.length > 0) return;
@@ -36,13 +37,17 @@ export function CoursesProvider({ children }) {
             list = list.filter(
                 (c) => c.title?.toLowerCase().includes(q) 
                 || c.description?.toLowerCase().includes(q)
+                || c.theme?.toLowerCase().includes(q)
             )
         }
         if (levelFilter) {
             list = list.filter((c) => c.level === levelFilter);
         }
+        if (themeFilter) {
+             list = list.filter((c) => c.theme === themeFilter);
+        }
         return list;
-    }, [courses, searchQuery, levelFilter]);
+    }, [courses, searchQuery, levelFilter, themeFilter]);
 
     const value = {
         courses,
@@ -54,6 +59,8 @@ export function CoursesProvider({ children }) {
         setSearchQuery,
         levelFilter,
         setLevelFilter,
+        themeFilter,
+        setThemeFilter,
     }
 
     return (

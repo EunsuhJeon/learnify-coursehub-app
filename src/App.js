@@ -6,11 +6,13 @@ import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
 import MyCourses from "./pages/MyCourses";
 import ProtectedRoute from "./layouts/ProtectedRoute";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="courses" element={<Courses />} />
         <Route path="courses/:id" element={<CourseDetail />} />
