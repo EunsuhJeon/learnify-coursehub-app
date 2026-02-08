@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
-import getCourses from "../api/coursesApi";
+import { useEffect } from "react";
+import { useCourses } from "../contexts/CoursesContext";
 
 export default function Courses() {
-    const [courses, setCourses] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
+    const {
+        filteredCourses,
+        isLoading,
+        error,
+        fetchCourses,
+        searchQuery,
+        setSearchQuery,
+        levelFilter,
+        setLevelFilter
+    } = useCourses();
 
     useEffect(() => {
-        async function loadCourses() {
-            try {
-                const data = await getCourses();
-                setCourses(data);
-            } catch (err) {
-                setError(err.message || "Error loading courses");
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        loadCourses();
-    }, []);
+        fetchCourses();
+    }, [fetchCourses]);
 
     if (isLoading) {
         return <p>Loading courses...</p>;
@@ -29,22 +25,42 @@ export default function Courses() {
         return <p style={{ color: "red" }}>{error}</p>;
     }
 
-    if (courses.length === 0) {
-        return <p>No courses available.</p>;
-    }
-
     return (
-        // Isabella, i think you'll have tu change this:
-        <div>
+        <div className="courses-page">
             <h1>Courses</h1>
 
-            <ul>
-                {courses.map((course) => (
-                    <li key={course.id}>
-                        <strong>{course.title}</strong> — {course.level}
-                    </li>
-                ))}
-            </ul>
+            <div className="courses-filters" style={{ marginBottom: '1rem' }}>
+                <input
+                    type="text"
+                    placeholder="Search by title or description..."
+                    value={searchQuery || ""}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="form-control"
+                    style={{ marginRight: '0.5rem' }}
+                />
+
+                <select
+                    value={levelFilter || ""}
+                    onChange={(e) => setLevelFilter(e.target.value)}
+                    className="form-select"
+                >
+                    <option value="">All levels</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+
+            {filteredCourses.length === 0 ? (
+                <p>No courses match your filters.</p>
+            ) : (
+                <ul className="courses-list">
+                    {filteredCourses.map((course) => (
+                        <li key={course.id}>
+                            <strong>{course.title}</strong> — {course.level}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }
