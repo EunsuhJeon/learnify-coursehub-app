@@ -7,7 +7,7 @@ export function AppHeader() {
   const onSubmitSearch = (e) => e.preventDefault();
 
   return (
-    <header className="sticky-top border-bottom full-header">
+    <header className="sticky-top border-bottom full-header bg-white" style={{ zIndex: 1030 }}>
       <nav className="navbar navbar-expand-lg">
         <div className="container py-2">
           {/* Left: Logo */}
