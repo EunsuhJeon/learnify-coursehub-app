@@ -7,7 +7,7 @@ export function CoursesProvider({ children }) {
     const [courses, setCourses] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const [hasFetched, setHasFetched] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState(null);
@@ -49,6 +49,12 @@ export function CoursesProvider({ children }) {
         return list;
     }, [courses, searchQuery, levelFilter, themeFilter]);
 
+    const getCourseById = useCallback((id) => {
+        const numId = typeof id === "string" ? parseInt(id, 10) : id;
+        if (Number.isNaN(numId)) return null;
+        return courses.find((c) => c.id === numId) ?? null;
+    }, [courses]);
+    
     const value = {
         courses,
         filteredCourses,
@@ -61,6 +67,7 @@ export function CoursesProvider({ children }) {
         setLevelFilter,
         themeFilter,
         setThemeFilter,
+        getCourseById
     }
 
     return (

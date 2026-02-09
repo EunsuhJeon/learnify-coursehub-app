@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCourses } from "../contexts/CoursesContext";
 import "./Login.css";
 
