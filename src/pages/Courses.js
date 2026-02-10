@@ -3,6 +3,10 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useCourses } from "../contexts/CoursesContext";
 import "./Login.css";
+import { getThemeImage } from "../utils/courseImages";
+import { useSearchParams } from "react-router-dom";
+
+
 
 export default function Courses() {
   const {
@@ -19,9 +23,17 @@ export default function Courses() {
     courses,
   } = useCourses();
 
+  const [searchParams] = useSearchParams();
+
+
   useEffect(() => {
     fetchCourses();
   }, [fetchCourses]);
+
+  useEffect(() => {
+  const t = searchParams.get("theme");
+  if (t) setThemeFilter(t);
+  }, [searchParams, setThemeFilter])
 
   const themeOptions = useMemo(() => {
     const set = new Set();
@@ -161,7 +173,11 @@ export default function Courses() {
               return (
                 <div key={course.id} className="col-12 col-md-6 col-lg-4">
                   <div className="card h-100 shadow-sm border-0 rounded-4 course-card">
-                    <div className="course-thumb rounded-top-4" />
+                    <img
+                      src={getThemeImage(theme)}
+                      alt={`${theme} course`}
+                      className="course-thumb-img rounded-top-4"
+                    />
 
                     <div className="card-body p-3 p-md-4 d-flex flex-column">
                       <div className="d-flex align-items-start justify-content-between gap-2 mb-2">

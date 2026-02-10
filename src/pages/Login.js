@@ -109,9 +109,6 @@ export default function Login() {
                         Password
                       </label>
 
-                      <button type="button" className="btn btn-link p-0 login-link">
-                        Forgot?
-                      </button>
                     </div>
 
                     <input
@@ -141,7 +138,7 @@ export default function Login() {
                     <span className="text-secondary small">
                       New here?{" "}
                       <NavLink to="/courses" className="login-link">
-                        Browse courses
+                        Create an account!
                       </NavLink>
                     </span>
                   </div>

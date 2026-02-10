@@ -4,8 +4,10 @@ import { useCourses } from "../contexts/CoursesContext";
 import "./Home.css";
 import bannerMain from "../assets/banner-main.png";
 import bannerMainMobile from "../assets/banner-main-mobile.png";
+import { getThemeImage } from "../utils/courseImages";
 
-const ALLOWED_THEMES = ["Tech", "Marketing", "Data", "Business"];
+
+const ALLOWED_THEMES = ["Tech", "Marketing", "Data", "Business", "Design", "Product"];
 
 function groupByTheme(courses = []) {
   const groups = new Map();
@@ -116,7 +118,7 @@ function ThemeSection({ theme, courses }) {
           <div className="text-secondary small">{courses.length} courses</div>
         </div>
 
-        <NavLink to="/courses" className="btn btn-light border btn-sm">
+        <NavLink to={`/courses?theme=${encodeURIComponent(theme)}`} className="btn btn-light border btn-sm">
           View all
         </NavLink>
       </div>
@@ -196,7 +198,11 @@ function CourseMiniCard({ course }) {
 
   return (
     <div className="card home-card shadow-sm border-0 rounded-4 h-100">
-      <div className="home-thumb rounded-top-4" />
+      <img
+        src={getThemeImage(course?.theme)}
+        alt={`${course?.theme || "Course"} thumbnail`}
+        className="home-thumb-img rounded-top-4"
+      />
       <div className="card-body p-3 d-flex flex-column">
         <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
           <h3 className="h6 fw-semibold mb-0 home-title">{title}</h3>

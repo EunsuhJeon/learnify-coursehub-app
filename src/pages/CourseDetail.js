@@ -1,5 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCourses } from "../contexts/CoursesContext";
+import { getThemeImage } from "../utils/courseImages";
+
 
 export default function CourseDetail() {
     const { id } = useParams();
@@ -59,7 +61,14 @@ export default function CourseDetail() {
 
             <div className="container pb-5">
                 {/* Hero */}
-                <section className="course-detail-hero text-white rounded-3 mt-3 p-4 p-md-5 mb-4">
+                <section
+                    className="course-detail-hero text-white rounded-3 mt-3 p-4 p-md-5 mb-4"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.30)), url(${getThemeImage(course?.theme)})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                    }}
+                    >
                     <h1 className="display-6 mb-3">{course.title}</h1>
                     {course.instructorName && (
                         <p className="mb-3 opacity-90">Taught by <strong>{course.instructorName}</strong></p>
