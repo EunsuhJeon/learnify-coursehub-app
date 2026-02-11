@@ -2,8 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useCourses } from "../contexts/CoursesContext";
 import { getMyEnrollments } from "../api/enrollmentsApi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./MyCourses.css";
+import ProfilePanel from "../components/ProfilePanel";
+
+
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
@@ -16,15 +19,22 @@ function progressForCourse(courseId) {
 }   
 
 export default function MyCourses() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const { courses, fetchCourses, isLoading: coursesLoading } = useCourses();
+    
 
     const [enrollments, setEnrollments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+   
+    const [activeTab, setActiveTab] = useState("courses");
+    const navigate = useNavigate();
 
-    // UI state (sidebar tabs)
-    const [activeTab, setActiveTab] = useState("courses"); // default abre em Courses
+    function handleLogout() {
+        logout();
+        navigate("/login");
+    }
+
 
     useEffect(() => {
         async function loadMyCourses() {
@@ -55,6 +65,8 @@ export default function MyCourses() {
         user?.name ||
         (user?.email ? user.email.split("@")[0] : null) ||
         "there";
+        
+
 
     // Loading state (Bootstrap)
     if (isLoading || coursesLoading) {
@@ -78,16 +90,6 @@ export default function MyCourses() {
             Back to courses
             </NavLink>
         </div>
-        );
-    }
-
-    if (enrollments.length === 0) {
-        return (
-            <div>
-                <h1>My Courses</h1>
-                <p>You are not enrolled in any courses yet.</p>
-                <NavLink to="/courses">Browse courses</NavLink>
-            </div>
         );
     }
 
@@ -137,17 +139,14 @@ export default function MyCourses() {
                 <hr className="my-4" />
 
                 <div className="d-grid gap-2">
-                  <button type="button" className="btn btn-outline-secondary">
-                    Settings
-                  </button>
-                  <button type="button" className="btn btn-outline-secondary">
-                    Help
-                  </button>
-                </div>
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={handleLogout}>
+                        Logout
+                    </button>
 
-                <p className="text-secondary small mt-3 mb-0">
-                  Tip: On mobile, swipe horizontally to browse your courses.
-                </p>
+                </div>
               </div>
             </div>
           </aside>
@@ -158,95 +157,39 @@ export default function MyCourses() {
             <div className="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-3">
               <div>
                 <h1 className="h3 fw-semibold mb-1">Hi, {displayName}</h1>
-                <p className="text-secondary mb-0">
-                  {activeTab === "courses"
-                    ? "Pick up where you left off."
-                    : "Your account details."}
-                </p>
               </div>
-
-              {activeTab === "courses" ? (
-                <div className="d-flex gap-2">
-                  <NavLink to="/courses" className="btn btn-outline-secondary">
-                    Browse more
-                  </NavLink>
-                  <button type="button" className="btn btn-dark">
-                    Continue learning
-                  </button>
-                </div>
-              ) : null}
             </div>
 
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body p-3 p-md-4">
                 {activeTab === "profile" ? (
-                  <>
-                    <h2 className="h5 fw-semibold mb-3">Profile</h2>
+                    <ProfilePanel />
+                    ) : (
 
-                    <div className="row g-3">
-                      <div className="col-12 col-md-6">
-                        <label className="form-label mb-1">Name</label>
-                        <input
-                          className="form-control"
-                          value={user?.name || "—"}
-                          readOnly
-                        />
-                      </div>
-
-                      <div className="col-12 col-md-6">
-                        <label className="form-label mb-1">Email</label>
-                        <input
-                          className="form-control"
-                          value={user?.email || "—"}
-                          readOnly
-                        />
-                      </div>
-
-                      <div className="col-12">
-                        <label className="form-label mb-1">Password</label>
-                        <input className="form-control" value="********" readOnly />
-                        <div className="form-text text-secondary">
-                          Password editing can be added later.
-                        </div>
-                      </div>
-                    </div>
-
-                    <hr className="my-4" />
-
-                    <div className="d-flex flex-wrap gap-2">
-                      <button type="button" className="btn btn-outline-secondary">
-                        Edit profile (later)
-                      </button>
-                      <button type="button" className="btn btn-outline-danger">
-                        Sign out (later)
-                      </button>
-                    </div>
-                  </>
-                ) : (
                   <>
                     <div className="d-flex align-items-center justify-content-between mb-2">
                       <h2 className="h5 fw-semibold mb-0">My Courses</h2>
-                      <span className="badge text-bg-light border">
-                        {enrolledCourses.length} enrolled
-                      </span>
                     </div>
 
-                    {/* Empty state (mantém tua lógica, só estiliza) */}
+                    
                     {enrollments.length === 0 ? (
-                      <div className="text-center py-5">
-                        <h3 className="h6 fw-semibold mb-2">
-                          You are not enrolled in any courses yet
-                        </h3>
-                        <p className="text-secondary mb-3">
-                          Explore the catalog and enroll to start learning.
-                        </p>
-                        <NavLink to="/courses" className="btn btn-dark">
-                          Browse courses
-                        </NavLink>
-                      </div>
-                    ) : (
+                        <div className="d-flex flex-column align-items-center justify-content-center py-5" style={{ minHeight: "350px" }}>
+                            
+                            <h2 className="h5 fw-semibold mb-3">
+                            You haven't enrolled in any courses yet
+                            </h2>
+
+                            <NavLink
+                                to="/courses"
+                                className="btn btn-learnify-enroll rounded-pill px-4"
+                            >
+                                Enroll now!
+                            </NavLink>
+
+                        </div>
+                        ) : (
+
                       <>
-                        {/* Rail horizontal no mobile (swipe), vira grid no desktop */}
                         <div className="myc-rail" role="region" aria-label="Enrolled courses">
                           {enrolledCourses.map((course) => {
                             const progress = progressForCourse(course.id);
@@ -256,7 +199,7 @@ export default function MyCourses() {
                                 key={course.id}
                                 className="card myc-course-card border-0 shadow-sm rounded-4"
                               >
-                                {/* Thumb: se tiver imagem no course, usa; senão gradiente */}
+                                {/* Thumb img */}
                                 {course?.imageUrl ? (
                                   <img
                                     src={course.imageUrl}

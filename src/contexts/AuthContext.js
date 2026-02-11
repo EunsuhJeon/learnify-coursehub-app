@@ -36,6 +36,22 @@ export function AuthProvider({ children }){
         setUser(null);
     };
 
+    const updateProfile = ({ name, password }) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+
+      const next = {
+        ...prev,
+        name: typeof name === "string" ? name : prev.name,
+        // ⚠️ mock: não faça isso em produção
+        ...(typeof password === "string" && password.length > 0 ? { password } : {}),
+      };
+
+      localStorage.setItem("user", JSON.stringify(next));
+      return next;
+    });
+    };
+
     return (
         <AuthContext.Provider
         value={{
@@ -44,6 +60,7 @@ export function AuthProvider({ children }){
             isLoading,
             login,
             logout,
+            updateProfile,
             isAuthenticated: !!token,
         }}
         >
