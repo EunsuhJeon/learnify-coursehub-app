@@ -56,3 +56,12 @@ export function getMyEnrollments(userId) {
         }, 500);
     });
 }
+
+// Check if the user is enrolled in a certain course
+export function isUserEnrolled(courseId, userId) {
+    const list = getStoredEnrollments();
+    return list.some(
+        (e) => e.courseId === courseId && e.userId === userId
+    );
+}
+
