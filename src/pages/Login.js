@@ -137,7 +137,7 @@ export default function Login() {
                   <div className="d-flex justify-content-between align-items-center mt-1">
                     <span className="text-secondary small">
                       New here?{" "}
-                      <NavLink to="/courses" className="login-link">
+                      <NavLink to="/register" className="login-link">
                         Create an account!
                       </NavLink>
                     </span>
