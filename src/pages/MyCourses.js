@@ -62,7 +62,7 @@ export default function MyCourses() {
                         <strong>{course.title}</strong>{" "}
                         <span style={{ color: "#666" }}>({course.level})</span>
                         <div>
-                            <NavLink to={`/courses/${course.id}`}>Go to course</NavLink>
+                            <NavLink to={`/courses/${course.id}/learn`}>Go to course</NavLink>
                         </div>
                     </li>
                 ))}

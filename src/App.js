@@ -8,6 +8,7 @@ import MyCourses from "./pages/MyCourses";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
+import CoursePlayer from "./pages/CoursePlayer";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route element={<ProtectedRoute/>}>
           <Route path="my-courses" element={<MyCourses />} />
+          <Route path="courses/:id/learn" element={<CoursePlayer />} />
         </Route>
       </Route>
     </Routes>
