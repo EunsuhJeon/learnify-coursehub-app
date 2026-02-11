@@ -7,7 +7,6 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./index.css";
 
 import { BrowserRouter } from 'react-router-dom';
-//import { AuthProvider } from './contexts/AuthContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { CoursesProvider } from './contexts/CoursesContext';
 import { CartProvider } from './contexts/CartContext';

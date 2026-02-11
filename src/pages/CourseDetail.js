@@ -5,6 +5,7 @@ import { getThemeImage } from "../utils/courseImages";
 import { enrollInCourse } from "../api/enrollmentsApi";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import { useEffect } from "react";
 import { isUserEnrolled } from "../api/enrollmentsApi";
 import { useCart } from "../contexts/CartContext";
 
@@ -14,15 +15,19 @@ export default function CourseDetail() {
     const { user, isAuthenticated } = useAuth();
     const [enrollError, setEnrollError] = useState("");
     const [enrolling, setEnrolling] = useState(false);
-    const { getCourseById, isLoading, error } = useCourses();
-    
-    
+    const { getCourseById, isLoading, error, fetchCourses } = useCourses();
+    useEffect(() => {
+        fetchCourses();
+    }, [fetchCourses]);
+
     const course = getCourseById(id);
     const alreadyEnrolled = isAuthenticated && user ? isUserEnrolled(course?.id, user.id) : false;
 
-    
+
     const { cart, addToCart } = useCart();
     const isInCart = cart.some((c) => c.id === course.id);
+
+    
 
     if (isLoading) {
         return (
@@ -66,6 +71,9 @@ export default function CourseDetail() {
             return;
         }
 
+        addToCart(course);
+        navigate("/cart");
+        /*
         try {
             setEnrolling(true);
             await enrollInCourse(course.id, user.id);
@@ -75,6 +83,7 @@ export default function CourseDetail() {
         } finally {
             setEnrolling(false);
         }
+        */
     };
 
 
