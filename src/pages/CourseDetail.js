@@ -6,6 +6,7 @@ import { enrollInCourse } from "../api/enrollmentsApi";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { isUserEnrolled } from "../api/enrollmentsApi";
+import { useCart } from "../contexts/CartContext";
 
 export default function CourseDetail() {
     const { id } = useParams();
@@ -14,9 +15,14 @@ export default function CourseDetail() {
     const [enrollError, setEnrollError] = useState("");
     const [enrolling, setEnrolling] = useState(false);
     const { getCourseById, isLoading, error } = useCourses();
-
+    
+    
     const course = getCourseById(id);
     const alreadyEnrolled = isAuthenticated && user ? isUserEnrolled(course?.id, user.id) : false;
+
+    
+    const { cart, addToCart } = useCart();
+    const isInCart = cart.some((c) => c.id === course.id);
 
     if (isLoading) {
         return (
@@ -142,7 +148,15 @@ export default function CourseDetail() {
                         )}
 
                         <button type="button" className="btn btn-outline-light">Preview Course</button>
-                        <button type="button" className="btn btn-outline-light">♡</button>
+                        <button
+                            type="button"
+                            className="btn btn-outline-light"
+                            disabled={isInCart || alreadyEnrolled}
+                            onClick={() => addToCart(course)}
+                        >
+                            {alreadyEnrolled ? "Purchased" : isInCart ? "In Cart" : "Add to Cart"}
+                        </button>
+
 
                     </div>
                 </section>
@@ -263,14 +277,21 @@ export default function CourseDetail() {
                                     ) : (
                                         <button
                                             type="button"
-                                            className="btn btn-light w-100 mb-2"
+                                            className="btn btn-learnify-primary w-100 mb-2"
                                             onClick={handleEnroll}
                                             disabled={enrolling}
                                         >
                                             {enrolling ? "Enrolling..." : "Enroll Now"}
                                         </button>
                                     )}
-                                    <button type="button" className="btn btn-outline-learnify w-100">Add to Wishlist</button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary w-100"
+                                        disabled={isInCart || alreadyEnrolled}
+                                        onClick={() => addToCart(course)}
+                                    >
+                                        {alreadyEnrolled ? "Purchased" : isInCart ? "In Cart" : "Add to Cart"}
+                                    </button>
                                     <hr />
                                     <dl className="small mb-0">
                                         {course.level && (
