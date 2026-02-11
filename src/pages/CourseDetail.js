@@ -5,6 +5,7 @@ import { getThemeImage } from "../utils/courseImages";
 import { enrollInCourse } from "../api/enrollmentsApi";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import { isUserEnrolled } from "../api/enrollmentsApi";
 
 export default function CourseDetail() {
     const { id } = useParams();
@@ -15,6 +16,7 @@ export default function CourseDetail() {
     const { getCourseById, isLoading, error } = useCourses();
 
     const course = getCourseById(id);
+    const alreadyEnrolled = isAuthenticated && user ? isUserEnrolled(course?.id, user.id) : false;
 
     if (isLoading) {
         return (
@@ -94,7 +96,7 @@ export default function CourseDetail() {
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
-                    >
+                >
                     <h1 className="display-6 mb-3">{course.title}</h1>
                     {course.instructorName && (
                         <p className="mb-3 opacity-90">Taught by <strong>{course.instructorName}</strong></p>
@@ -120,14 +122,24 @@ export default function CourseDetail() {
                         <p className="small opacity-75 mb-4">{course.enrolledCount?.toLocaleString?.() ?? course.enrolledCount} students enrolled</p>
                     )}
                     <div className="d-flex flex-wrap gap-2">
-                        <button
-                            type="button"
-                            className="btn btn-light"
-                            onClick={handleEnroll}
-                            disabled={enrolling}
-                        >
-                            {enrolling ? "Enrolling..." : "Enroll Now"}
-                        </button>
+                        {alreadyEnrolled ? (
+                            <button
+                                type="button"
+                                className="btn btn-learnify-primary"
+                                onClick={() => navigate(`/courses/${course.id}/learn`)}
+                            >
+                                Go to My Course
+                            </button>
+                        ) : (
+                            <button
+                                type="button"
+                                className="btn btn-light"
+                                onClick={handleEnroll}
+                                disabled={enrolling}
+                            >
+                                {enrolling ? "Enrolling..." : "Enroll Now"}
+                            </button>
+                        )}
 
                         <button type="button" className="btn btn-outline-light">Preview Course</button>
                         <button type="button" className="btn btn-outline-light">♡</button>
@@ -240,14 +252,24 @@ export default function CourseDetail() {
                                         <span className="fs-4 fw-bold">{priceDisplay}</span>
                                         {course.priceNote && <p className="small text-secondary mb-0">{course.priceNote}</p>}
                                     </div>
-                                    <button
-                                        type="button"
-                                        className="btn btn-learnify-primary w-100 mb-2"
-                                        onClick={handleEnroll}
-                                        disabled={enrolling}
-                                    >
-                                        {enrolling ? "Enrolling..." : "Enroll Now"}
-                                    </button>
+                                    {alreadyEnrolled ? (
+                                        <button
+                                            type="button"
+                                            className="btn btn-learnify-primary w-100 mb-2"
+                                            onClick={() => navigate(`/courses/${course.id}/learn`)}
+                                        >
+                                            Go to My Course
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            className="btn btn-light w-100 mb-2"
+                                            onClick={handleEnroll}
+                                            disabled={enrolling}
+                                        >
+                                            {enrolling ? "Enrolling..." : "Enroll Now"}
+                                        </button>
+                                    )}
                                     <button type="button" className="btn btn-outline-learnify w-100">Add to Wishlist</button>
                                     <hr />
                                     <dl className="small mb-0">
