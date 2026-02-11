@@ -32,7 +32,7 @@
 
 .home-rail .home-card {
   flex: 0 0 auto;
-  width: 260px;          /* em vez de flex-basis fixo, deixa explícito */
+  width: 260px;          
   scroll-snap-align: start;
   overflow: hidden;
 }

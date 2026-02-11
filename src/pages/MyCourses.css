@@ -1,0 +1,52 @@
+.myc-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, #8269e8, #9f65f3, #aa56f5);
+}
+
+.myc-thumb {
+  height: 92px;
+  background: linear-gradient(135deg, #8269e8, #9f65f3, #aa56f5);
+}
+
+.myc-thumb-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+/* MOBILE: corredor swipe */
+.myc-rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 4px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.myc-course-card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}
+
+/* Desktop: vira grid */
+@media (min-width: 992px) {
+  .myc-rail {
+    overflow: visible;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .myc-course-card {
+    flex: 0 0 calc(50% - 6px);
+  }
+}
