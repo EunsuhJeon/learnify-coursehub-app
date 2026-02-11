@@ -16,7 +16,13 @@ export default function CoursePlayer() {
 
   const course = getCourseById(id);
 
-  const [reviews, setReviews] = useState(() => course?.reviews || []);
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    if (course?.reviews) {
+      setReviews(course.reviews);
+    }
+  }, [course]);
+  
   const [newReviewText, setNewReviewText] = useState("");
   const [newReviewRating, setNewReviewRating] = useState(5);
   const [submittingReview, setSubmittingReview] = useState(false);

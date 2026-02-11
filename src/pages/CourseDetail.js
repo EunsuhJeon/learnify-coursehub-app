@@ -5,6 +5,9 @@ import { getThemeImage } from "../utils/courseImages";
 import { enrollInCourse } from "../api/enrollmentsApi";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import { useEffect } from "react";
+import { isUserEnrolled } from "../api/enrollmentsApi";
+import { useCart } from "../contexts/CartContext";
 
 export default function CourseDetail() {
     const { id } = useParams();
@@ -12,9 +15,19 @@ export default function CourseDetail() {
     const { user, isAuthenticated } = useAuth();
     const [enrollError, setEnrollError] = useState("");
     const [enrolling, setEnrolling] = useState(false);
-    const { getCourseById, isLoading, error } = useCourses();
+    const { getCourseById, isLoading, error, fetchCourses } = useCourses();
+    useEffect(() => {
+        fetchCourses();
+    }, [fetchCourses]);
 
     const course = getCourseById(id);
+    const alreadyEnrolled = isAuthenticated && user ? isUserEnrolled(course?.id, user.id) : false;
+
+
+    const { cart, addToCart } = useCart();
+    const isInCart = cart.some((c) => c.id === course.id);
+
+    
 
     if (isLoading) {
         return (
@@ -58,6 +71,9 @@ export default function CourseDetail() {
             return;
         }
 
+        addToCart(course);
+        navigate("/cart");
+        /*
         try {
             setEnrolling(true);
             await enrollInCourse(course.id, user.id);
@@ -67,6 +83,7 @@ export default function CourseDetail() {
         } finally {
             setEnrolling(false);
         }
+        */
     };
 
 
@@ -94,7 +111,7 @@ export default function CourseDetail() {
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
-                    >
+                >
                     <h1 className="display-6 mb-3">{course.title}</h1>
                     {course.instructorName && (
                         <p className="mb-3 opacity-90">Taught by <strong>{course.instructorName}</strong></p>
@@ -120,17 +137,35 @@ export default function CourseDetail() {
                         <p className="small opacity-75 mb-4">{course.enrolledCount?.toLocaleString?.() ?? course.enrolledCount} students enrolled</p>
                     )}
                     <div className="d-flex flex-wrap gap-2">
-                        <button
-                            type="button"
-                            className="btn btn-light"
-                            onClick={handleEnroll}
-                            disabled={enrolling}
-                        >
-                            {enrolling ? "Enrolling..." : "Enroll Now"}
-                        </button>
+                        {alreadyEnrolled ? (
+                            <button
+                                type="button"
+                                className="btn btn-learnify-primary"
+                                onClick={() => navigate(`/courses/${course.id}/learn`)}
+                            >
+                                Go to My Course
+                            </button>
+                        ) : (
+                            <button
+                                type="button"
+                                className="btn btn-light"
+                                onClick={handleEnroll}
+                                disabled={enrolling}
+                            >
+                                {enrolling ? "Enrolling..." : "Enroll Now"}
+                            </button>
+                        )}
 
                         <button type="button" className="btn btn-outline-light">Preview Course</button>
-                        <button type="button" className="btn btn-outline-light">♡</button>
+                        <button
+                            type="button"
+                            className="btn btn-outline-light"
+                            disabled={isInCart || alreadyEnrolled}
+                            onClick={() => addToCart(course)}
+                        >
+                            {alreadyEnrolled ? "Purchased" : isInCart ? "In Cart" : "Add to Cart"}
+                        </button>
+
 
                     </div>
                 </section>
@@ -240,15 +275,32 @@ export default function CourseDetail() {
                                         <span className="fs-4 fw-bold">{priceDisplay}</span>
                                         {course.priceNote && <p className="small text-secondary mb-0">{course.priceNote}</p>}
                                     </div>
+                                    {alreadyEnrolled ? (
+                                        <button
+                                            type="button"
+                                            className="btn btn-learnify-primary w-100 mb-2"
+                                            onClick={() => navigate(`/courses/${course.id}/learn`)}
+                                        >
+                                            Go to My Course
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            className="btn btn-learnify-primary w-100 mb-2"
+                                            onClick={handleEnroll}
+                                            disabled={enrolling}
+                                        >
+                                            {enrolling ? "Enrolling..." : "Enroll Now"}
+                                        </button>
+                                    )}
                                     <button
                                         type="button"
-                                        className="btn btn-learnify-primary w-100 mb-2"
-                                        onClick={handleEnroll}
-                                        disabled={enrolling}
+                                        className="btn btn-outline-secondary w-100"
+                                        disabled={isInCart || alreadyEnrolled}
+                                        onClick={() => addToCart(course)}
                                     >
-                                        {enrolling ? "Enrolling..." : "Enroll Now"}
+                                        {alreadyEnrolled ? "Purchased" : isInCart ? "In Cart" : "Add to Cart"}
                                     </button>
-                                    <button type="button" className="btn btn-outline-learnify w-100">Add to Wishlist</button>
                                     <hr />
                                     <dl className="small mb-0">
                                         {course.level && (
