@@ -16,84 +16,92 @@ function clamp(n, min, max) {
 function progressForCourse(courseId) {
   const base = (Number(courseId) * 17) % 100;
   return clamp(base < 12 ? base + 18 : base, 5, 98);
-}   
+}
 
 export default function MyCourses() {
-    const { user, logout } = useAuth();
-    const { courses, fetchCourses, isLoading: coursesLoading } = useCourses();
-    
+  const { user, logout } = useAuth();
+  const { courses, fetchCourses, isLoading: coursesLoading } = useCourses();
 
-    const [enrollments, setEnrollments] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
-   
-    const [activeTab, setActiveTab] = useState("courses");
-    const navigate = useNavigate();
 
-    function handleLogout() {
-        logout();
-        navigate("/login");
+  const [enrollments, setEnrollments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const [activeTab, setActiveTab] = useState("courses");
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
+
+
+  useEffect(() => {
+    async function loadMyCourses() {
+      try {
+        // Make sure that courses are loaded
+        await fetchCourses();
+
+        const data = await getMyEnrollments(user.id);
+        setEnrollments(data);
+      } catch (err) {
+        setError(err.message || "Failed to load enrolled courses");
+      } finally {
+        setIsLoading(false);
+      }
     }
 
+    loadMyCourses();
+  }, [fetchCourses, user.id]);
 
-    useEffect(() => {
-        async function loadMyCourses() {
-            try {
-                // Make sure that courses are loaded
-                await fetchCourses();
+  const enrolledCourses = useMemo(() => {
+    const result = [];
 
-                const data = await getMyEnrollments(user.id);
-                setEnrollments(data);
-            } catch (err) {
-                setError(err.message || "Failed to load enrolled courses");
-            } finally {
-                setIsLoading(false);
-            }
-        }
+    enrollments.forEach((e) => {
+      const match = courses.find((c) => c.id === e.courseId);
+      if (match) {
+        result.push(match);
+      }
+    });
 
-        loadMyCourses();
-    }, [fetchCourses, user.id]);
-
-    const enrolledCourses = useMemo(() => {
-        return enrollments
-        .map((e) => courses.find((c) => c.id === e.courseId))
-        .filter(Boolean);
-    }, [enrollments, courses]);
+    return result;
+  }, [enrollments, courses]);
 
 
-    const displayName =
-        user?.name ||
-        (user?.email ? user.email.split("@")[0] : null) ||
-        "there";
-        
+
+  const displayName =
+    user?.name ||
+    (user?.email ? user.email.split("@")[0] : null) ||
+    "there";
 
 
-    // Loading state (Bootstrap)
-    if (isLoading || coursesLoading) {
-        return (
-        <div className="container py-4 py-md-5">
-            <div className="d-flex align-items-center gap-2 text-secondary">
-            <div className="spinner-border spinner-border-sm" role="status" aria-label="Loading" />
-            <span>Loading your courses...</span>
-            </div>
-        </div>
-        );
-    }
 
-    if (error) {
-        return (
-        <div className="container py-4 py-md-5">
-            <div className="alert alert-danger" role="alert">
-            {error}
-            </div>
-            <NavLink to="/courses" className="btn btn-outline-secondary btn-sm">
-            Back to courses
-            </NavLink>
-        </div>
-        );
-    }
-
+  // Loading state (Bootstrap)
+  if (isLoading || coursesLoading) {
     return (
+      <div className="container py-4 py-md-5">
+        <div className="d-flex align-items-center gap-2 text-secondary">
+          <div className="spinner-border spinner-border-sm" role="status" aria-label="Loading" />
+          <span>Loading your courses...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container py-4 py-md-5">
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+        <NavLink to="/courses" className="btn btn-outline-secondary btn-sm">
+          Back to courses
+        </NavLink>
+      </div>
+    );
+  }
+
+  return (
     <div className="myc-page bg-light min-vh-100">
       <div className="container py-4 py-md-5">
         <div className="row g-4">
@@ -117,9 +125,8 @@ export default function MyCourses() {
                 <nav className="nav nav-pills flex-column gap-2" aria-label="My Courses navigation">
                   <button
                     type="button"
-                    className={`nav-link text-start ${
-                      activeTab === "courses" ? "active" : "text-secondary"
-                    }`}
+                    className={`nav-link text-start ${activeTab === "courses" ? "active" : "text-secondary"
+                      }`}
                     onClick={() => setActiveTab("courses")}
                   >
                     My Courses
@@ -127,9 +134,8 @@ export default function MyCourses() {
 
                   <button
                     type="button"
-                    className={`nav-link text-start ${
-                      activeTab === "profile" ? "active" : "text-secondary"
-                    }`}
+                    className={`nav-link text-start ${activeTab === "profile" ? "active" : "text-secondary"
+                      }`}
                     onClick={() => setActiveTab("profile")}
                   >
                     Profile
@@ -139,12 +145,12 @@ export default function MyCourses() {
                 <hr className="my-4" />
 
                 <div className="d-grid gap-2">
-                    <button
-                        type="button"
-                        className="btn btn-outline-secondary"
-                        onClick={handleLogout}>
-                        Logout
-                    </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={handleLogout}>
+                    Logout
+                  </button>
 
                 </div>
               </div>
@@ -163,31 +169,31 @@ export default function MyCourses() {
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body p-3 p-md-4">
                 {activeTab === "profile" ? (
-                    <ProfilePanel />
-                    ) : (
+                  <ProfilePanel />
+                ) : (
 
                   <>
                     <div className="d-flex align-items-center justify-content-between mb-2">
                       <h2 className="h5 fw-semibold mb-0">My Courses</h2>
                     </div>
 
-                    
+
                     {enrollments.length === 0 ? (
-                        <div className="d-flex flex-column align-items-center justify-content-center py-5" style={{ minHeight: "350px" }}>
-                            
-                            <h2 className="h5 fw-semibold mb-3">
-                            You haven't enrolled in any courses yet
-                            </h2>
+                      <div className="d-flex flex-column align-items-center justify-content-center py-5" style={{ minHeight: "350px" }}>
 
-                            <NavLink
-                                to="/courses"
-                                className="btn btn-learnify-enroll rounded-pill px-4"
-                            >
-                                Enroll now!
-                            </NavLink>
+                        <h2 className="h5 fw-semibold mb-3">
+                          You haven't enrolled in any courses yet
+                        </h2>
 
-                        </div>
-                        ) : (
+                        <NavLink
+                          to="/courses"
+                          className="btn btn-learnify-enroll rounded-pill px-4"
+                        >
+                          Enroll now!
+                        </NavLink>
+
+                      </div>
+                    ) : (
 
                       <>
                         <div className="myc-rail" role="region" aria-label="Enrolled courses">

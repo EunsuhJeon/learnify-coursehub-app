@@ -8,8 +8,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { isUserEnrolled } from "../api/enrollmentsApi";
 import { useCart } from "../contexts/CartContext";
-import previewThumb from "../assets/previews/course-thumb.jpg";
-import previewGif from "../assets/previews/course-preview.gif";
+//import previewThumb from "../assets/previews/course-thumb.jpg";
+import previewThumb from "../assets/previews/course-thumb.jpg"
+//import previewGif from "../assets/previews/course-preview.gif";
+import previewGif from "../assets/previews/course-preview.gif"
 
 
 export default function CourseDetail() {
