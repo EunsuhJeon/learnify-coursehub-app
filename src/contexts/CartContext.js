@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-    const [cart, setCart] = useState(()=>{
+    const [cart, setCart] = useState(() => {
         try {
             const stored = localStorage.getItem("learnify_cart");
             return stored ? JSON.parse(stored) : [];
@@ -12,16 +12,21 @@ export function CartProvider({ children }) {
         }
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         localStorage.setItem("learnify_cart", JSON.stringify(cart));
     }, [cart]);
 
     const addToCart = (course) => {
+        if (!course) return;
+
         setCart((prev) => {
-            if (prev.find((c) => c.id === course.id)) return prev;
-            return [...prev, course];
+            const exists = prev.some((c) => c.id === course.id);
+            if (exists) return prev;
+
+            return [...prev, { ...course }];
         });
     };
+
 
     const removeFromCart = (courseId) => {
         setCart((prev) => prev.filter((c) => c.id !== courseId));

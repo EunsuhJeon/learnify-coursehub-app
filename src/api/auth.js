@@ -23,14 +23,16 @@ function saveUsers(users) {
 export function loginRequest(email, password) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            const emailTrim = email.trim().toLowerCase();
-            const users = getStoredUsers();
+            const emailTrim = (email || "").trim().toLowerCase();
+            const users = getStoredUsers() || [];
 
-            const found = users.find(
-                (u) =>
-                    u.email?.toLowerCase() === emailTrim &&
+            const found = users.find((u) => {
+                if (!u.email) return false;
+                return (
+                    u.email.toLowerCase() === emailTrim &&
                     u.password === password
-            );
+                );
+            });
 
             if (!found) {
                 reject({
@@ -44,7 +46,9 @@ export function loginRequest(email, password) {
                 token: "fake-jwt-token-123",
                 user: {
                     id: found.id,
-                    name: `${found.firstName ?? ""} ${found.lastName ?? ""}`.trim() || "User",
+                    name:
+                        `${found.firstName || ""} ${found.lastName || ""}`.trim() ||
+                        "User",
                     email: found.email,
                 },
             });

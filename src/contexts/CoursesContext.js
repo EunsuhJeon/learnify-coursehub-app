@@ -14,47 +14,55 @@ export function CoursesProvider({ children }) {
     const [levelFilter, setLevelFilter] = useState(null);
     const [themeFilter, setThemeFilter] = useState(null);
 
-    const fetchCourses = useCallback(async (force = false) =>{
-        if(!force && hasFetched && courses.length > 0) return;
+    const fetchCourses = useCallback(async (force = false) => {
+        if (!force && hasFetched) {
+            return;
+        }
         setIsLoading(true);
         setError(null);
 
-        try{
+        try {
             const data = await getCourses();
-            setCourses(data);
+            setCourses(data || []);
             setHasFetched(true);
         } catch (err) {
-            setError(err.message || 'Loading Courses Error');
+            setError(err?.message || "Error loading courses");
         } finally {
             setIsLoading(false);
         }
-    }, [hasFetched, courses.length]);
+    }, [hasFetched]);
 
-    const filteredCourses = useMemo(()=>{
+    const filteredCourses = useMemo(() => {
         let list = [...courses];
-        const q = searchQuery?.trim()?.toLowerCase();
-        if(q){
-            list = list.filter(
-                (c) => c.title?.toLowerCase().includes(q) 
-                || c.description?.toLowerCase().includes(q)
-                || c.theme?.toLowerCase().includes(q)
-            )
+
+        if (searchQuery) {
+            const q = searchQuery.trim().toLowerCase();
+            list = list.filter((c) => {
+                const title = c.title?.toLowerCase() || "";
+                const desc = c.description?.toLowerCase() || "";
+                const theme = c.theme?.toLowerCase() || "";
+                return title.includes(q) || desc.includes(q) || theme.includes(q);
+            });
         }
+
         if (levelFilter) {
             list = list.filter((c) => c.level === levelFilter);
         }
+
         if (themeFilter) {
-             list = list.filter((c) => c.theme === themeFilter);
+            list = list.filter((c) => c.theme === themeFilter);
         }
+
         return list;
     }, [courses, searchQuery, levelFilter, themeFilter]);
+
 
     const getCourseById = useCallback((id) => {
         const numId = typeof id === "string" ? parseInt(id, 10) : id;
         if (Number.isNaN(numId)) return null;
         return courses.find((c) => c.id === numId) ?? null;
     }, [courses]);
-    
+
     const value = {
         courses,
         filteredCourses,
@@ -77,6 +85,6 @@ export function CoursesProvider({ children }) {
     );
 }
 
-export function useCourses(){
+export function useCourses() {
     return useContext(CoursesContext);
 }
