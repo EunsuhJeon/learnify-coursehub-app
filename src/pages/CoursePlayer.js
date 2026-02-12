@@ -4,6 +4,31 @@ import { useAuth } from "../contexts/AuthContext";
 import { getThemeImage } from "../utils/courseImages";
 import { useEffect, useState } from "react";
 
+const REVIEWS_STORAGE_KEY = "learnify_course_reviews";
+
+function getStoredReviews(courseId) {
+  try {
+    const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
+    if (!raw) return [];
+    const data = JSON.parse(raw);
+    const list = data[String(courseId)];
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveStoredReviews(courseId, list) {
+  try {
+    const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
+    const data = raw ? JSON.parse(raw) : {};
+    data[String(courseId)] = list;
+    localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    //
+  }
+}
+
 export default function CoursePlayer() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -18,10 +43,11 @@ export default function CoursePlayer() {
 
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    if (course?.reviews) {
-      setReviews(course.reviews);
-    }
-  }, [course]);
+    if (!id) return;
+    const fromCourse = Array.isArray(course?.reviews) ? course.reviews : [];
+    const fromStorage = getStoredReviews(id);
+    setReviews([...fromCourse, ...fromStorage]);
+  }, [id, course?.reviews]);
   
   const [newReviewText, setNewReviewText] = useState("");
   const [newReviewRating, setNewReviewRating] = useState(5);
@@ -108,6 +134,8 @@ export default function CoursePlayer() {
       text,
     };
 
+    const stored = getStoredReviews(id);
+    saveStoredReviews(id, [newItem, ...stored]);
     setReviews((prev) => [newItem, ...prev]);
     setNewReviewText("");
     setSubmittingReview(false);
