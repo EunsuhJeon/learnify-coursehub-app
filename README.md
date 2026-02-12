@@ -53,10 +53,10 @@ src/
 ## 👥 Team Roles & Responsibilities
 
 | Developer | Main Focus | Responsibilities | Key Contributions |
-|-----------|------------|------------------|-------------------|
-| **Eunsuh** | Routing & Auth | - Main routes & layout<br>- Login/Register flow<br>- Global Footer | Core app structure<br>Secure auth system<br>Consistent layout |
-| **Isabella** | UI/UX Design | - My Courses sidebar<br>- Profile/Courses UI<br>- Reviews section | User-friendly layouts<br>Progress tracking UI<br>Review experience |
-| **Santiago** | Business Logic | - Add to Cart system<br>- Purchase state logic<br>- Mock API integration | Cart/purchase flow<br>Smart button states<br>Error handling |
+|----------|------------|------------------|-------------------|
+| Eunsuh | Routing, Auth, Global Layout | - Set up main routes (`/login`, `/courses`, `/courses/:id`, `/my-courses`)<br>- Implement main layout (header/nav/content shell)<br>- Implement authentication flow (login, protected routes, localStorage)<br>- Implement **Create Account** (register + auto-login)<br>- Implement global **Footer** component | - Defined core app structure and navigation<br>- Built secure login/register experience<br>- Ensured consistent layout and footer across all pages |
+| Isabella | UI/UX, My Courses, Reviews | - Implement Header/Nav UI and active states<br>- Build **My Courses** page (sidebar: Profile / Courses)<br>- Profile view (email, name, password placeholders)<br>- Horizontal course cards with progress bars<br>- Course page layout (content structure, reviews section)<br>- Review list and **new review input** UI | - Designed and implemented user-facing layouts<br>- Created a clear My Courses experience with progress<br>- Made course and review sections easy to use and read |
+| Santiago | Business Logic, Cart, Purchase State | - Replace **Wishlist** with **Add to Cart** feature<br>- Implement global cart state (context/store)<br>- Implement purchase state check (already bought vs not bought)<br>- On course detail: change button to “Go to My Courses” if purchased<br>- Integrate mock APIs for enroll/purchase/review flows<br>- Handle error states and console clean-up | - Implemented cart and purchase logic for courses<br>- Connected UI with mock API-based business rules<br>- Improved reliability by handling edge cases and errors |
 
 ---
 
