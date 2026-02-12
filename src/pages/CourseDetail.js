@@ -58,9 +58,25 @@ export default function CourseDetail() {
         );
     }
 
+    const REVIEWS_STORAGE_KEY = "learnify_course_reviews";
+
+    function getStoredReviews(courseId) {
+        try {
+          const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
+          if (!raw) return [];
+          const data = JSON.parse(raw);
+          const list = data[String(courseId)];
+          return Array.isArray(list) ? list : [];
+        } catch {
+          return [];
+        }
+    }
+      
     const priceDisplay = course.price === "Free" || course.price == null ? "Free" : `$${course.price}`;
     const instructor = course.instructor || {};
-    const reviews = course.reviews || [];
+    const fromCourse = Array.isArray(course?.reviews) ? course.reviews : [];
+    const fromStorage = getStoredReviews(id);
+    const reviews = [...fromCourse, ...fromStorage]  || [];
     const learningOutcomes = course.learningOutcomes || [];
 
     const handleEnroll = async () => {
@@ -155,8 +171,6 @@ export default function CourseDetail() {
                                 {enrolling ? "Enrolling..." : "Enroll Now"}
                             </button>
                         )}
-
-                        <button type="button" className="btn btn-outline-light">Preview Course</button>
                         <button
                             type="button"
                             className="btn btn-outline-light"
