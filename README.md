@@ -98,8 +98,8 @@ We managed our development process using **Jira**.
 
 | Artifact | Link |
 |----------|------|
-| Product Backlog | [https://your-link](https://webdev-final-project.atlassian.net/jira/software/projects/FP/boards/1/backlog?atlOrigin=eyJpIjoiZDk0ZDQ1NzI5ZjMxNDFkMWIxYWE0NWQ5MzYzYzIwMWUiLCJwIjoiaiJ9) |
-| Sprint Board | [https://your-link](https://webdev-final-project.atlassian.net/jira/software/projects/FP/boards/1?atlOrigin=eyJpIjoiM2JiMDI2MGE2ODQzNDkxZWIwYWU4M2FmZGZkOWE4Y2EiLCJwIjoiaiJ9) |
-| Summary | [https://your-link](https://webdev-final-project.atlassian.net/jira/software/projects/FP/summary?atlOrigin=eyJpIjoiNGRjNGJlNWIzOWRiNDM5OWE2OGE2NGFlNmE2M2I1NTQiLCJwIjoiaiJ9) |
+| Product Backlog | [Backlog](https://webdev-final-project.atlassian.net/jira/software/projects/FP/boards/1/backlog?atlOrigin=eyJpIjoiZDk0ZDQ1NzI5ZjMxNDFkMWIxYWE0NWQ5MzYzYzIwMWUiLCJwIjoiaiJ9) |
+| Sprint Board | [Board](https://webdev-final-project.atlassian.net/jira/software/projects/FP/boards/1?atlOrigin=eyJpIjoiM2JiMDI2MGE2ODQzNDkxZWIwYWU4M2FmZGZkOWE4Y2EiLCJwIjoiaiJ9) |
+| Summary | [Summary](https://webdev-final-project.atlassian.net/jira/software/projects/FP/summary?atlOrigin=eyJpIjoiNGRjNGJlNWIzOWRiNDM5OWE2OGE2NGFlNmE2M2I1NTQiLCJwIjoiaiJ9) |
 
 
