@@ -1,0 +1,44 @@
+{
+    "Tech": [
+        "Build and deploy modern applications with industry-standard tools",
+        "Apply best practices for code quality and maintainability",
+        "Understand core concepts and architecture patterns",
+        "Work with version control and collaboration workflows",
+        "Debug and optimize performance effectively"
+    ],
+    "Design": [
+        "Create user-centered interfaces and prototypes",
+        "Apply design systems and consistency across products",
+        "Conduct basic user research and iterate on feedback",
+        "Use design tools for collaboration and handoff",
+        "Implement accessible and inclusive design principles"
+    ],
+    "Data": [
+        "Analyze and visualize data with confidence",
+        "Apply statistical and ML concepts to real datasets",
+        "Work with databases and query languages",
+        "Interpret results and communicate insights",
+        "Automate data pipelines and workflows"
+    ],  
+    "Business": [
+        "Make data-driven decisions and measure outcomes",
+        "Communicate effectively with stakeholders",
+        "Apply frameworks for strategy and operations",
+        "Manage projects and priorities in agile environments",
+        "Scale processes and teams sustainably"
+    ],
+    "Marketing": [
+        "Run and measure campaigns across channels",
+        "Create content and funnels that convert",
+        "Use analytics and attribution effectively",
+        "Optimize for SEO and growth loops",
+        "Build and nurture audiences"
+    ],
+    "Product": [
+        "Validate ideas with users and data",
+        "Run workshops and design sprints",
+        "Define roadmaps and prioritize features",
+        "Collaborate across design, engineering, and business",
+        "Ship and iterate based on feedback"
+    ]
+}

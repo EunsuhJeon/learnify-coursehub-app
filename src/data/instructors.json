@@ -1,0 +1,38 @@
+[
+  {
+    "id": 0,
+    "name": "Dr. Sarah Johnson",
+    "title": "Full-Stack Developer & Tech Educator",
+    "studentsCount": 524891,
+    "coursesCount": 12,
+    "instructorRating": 4.9,
+    "bio": "Dr. Sarah Johnson is a passionate educator with over 15 years of experience in web development and computer science. She has worked with major tech companies and has taught over 500,000 students worldwide."
+  },
+  {
+    "id": 1,
+    "name": "Alex Chen",
+    "title": "Senior Software Engineer & Instructor",
+    "studentsCount": 312000,
+    "coursesCount": 8,
+    "instructorRating": 4.8,
+    "bio": "Alex has built production systems at scale and loves teaching practical skills. Focus on clean code and real-world projects."
+  },
+  {
+    "id": 2,
+    "name": "Maria Garcia",
+    "title": "Data Scientist & ML Educator",
+    "studentsCount": 198000,
+    "coursesCount": 6,
+    "instructorRating": 4.9,
+    "bio": "Maria specializes in data analysis and machine learning. Former research lead with a passion for making complex topics accessible."
+  },
+  {
+    "id": 3,
+    "name": "James Wilson",
+    "title": "Design Lead & UX Instructor",
+    "studentsCount": 156000,
+    "coursesCount": 5,
+    "instructorRating": 4.7,
+    "bio": "James has led design teams at startups and enterprises. Expert in UI/UX, design systems, and user research."
+  }
+]
