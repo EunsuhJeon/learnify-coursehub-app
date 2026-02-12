@@ -1,10 +1,12 @@
 // src/components/AppHeader.jsx
 import { NavLink } from "react-router-dom";
 import { Search, Bell, ShoppingCart } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 import logoImage from "../assets/learnify_logo.png";
 
 export function AppHeader() {
   const onSubmitSearch = (e) => e.preventDefault();
+  const { isAuthenticated, user, logout } = useAuth();
 
   return (
     <header className="sticky-top border-bottom full-header bg-white" style={{ zIndex: 1030 }}>
@@ -57,19 +59,21 @@ export function AppHeader() {
 
             {/* Right: Buttons + Icons */}
             <div className="d-flex align-items-center gap-3 ms-lg-auto pb-2 pb-lg-0">
-              <NavLink
-                to="/login"
-                className="btn btn-learnify-login rounded-pill px-4 "
-              >
-                Login
-              </NavLink>
+              {!isAuthenticated && (
+                <NavLink to="/login" className="btn btn-outline-dark">
+                  Login
+                </NavLink>
+              )}
 
-              <NavLink
+
+              {
+                <NavLink
                 to="/courses"
                 className="btn btn-learnify-enroll rounded-pill px-4"
               >
-                Enroll now!
+                {!isAuthenticated ? "Enroll now!" : "Browse Courses"}
               </NavLink>
+              }
 
               <button
                 type="button"
