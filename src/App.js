@@ -9,6 +9,7 @@ import ProtectedRoute from "./layouts/ProtectedRoute";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import CoursePlayer from "./pages/CoursePlayer";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route element={<ProtectedRoute/>}>
           <Route path="my-courses" element={<MyCourses />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="courses/:id/learn" element={<CoursePlayer />} />
         </Route>
       </Route>
