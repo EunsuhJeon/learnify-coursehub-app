@@ -1,12 +1,17 @@
 // src/components/AppHeader.jsx
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Search, Bell, ShoppingCart } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import logoImage from "../assets/learnify_logo.png";
+import "../index.css";
+
 
 export function AppHeader() {
   const onSubmitSearch = (e) => e.preventDefault();
   const { isAuthenticated, user, logout } = useAuth();
+
+  const navigate = useNavigate();
+
 
   return (
     <header className="sticky-top border-bottom full-header bg-white" style={{ zIndex: 1030 }}>
@@ -57,23 +62,32 @@ export function AppHeader() {
               </div>
             </form>
 
-            {/* Right: Buttons + Icons */}
             <div className="d-flex align-items-center gap-3 ms-lg-auto pb-2 pb-lg-0">
-              {!isAuthenticated && (
-                <NavLink to="/login" className="btn btn-outline-dark">
+              {!isAuthenticated ? (
+                <NavLink
+                  to="/login"
+                  className="btn btn-learnify-login rounded-pill px-4"
+                >
                   Login
                 </NavLink>
+              ) : (
+                <>
+                  {/* My Account Button */}
+                  <NavLink
+                    to="/my-courses"
+                    className="btn btn-learnify-login rounded-pill px-4"
+                  >
+                    My Account
+                  </NavLink>
+                </>
               )}
 
-
-              {
-                <NavLink
+              <NavLink
                 to="/courses"
                 className="btn btn-learnify-enroll rounded-pill px-4"
               >
                 {!isAuthenticated ? "Enroll now!" : "Browse Courses"}
               </NavLink>
-              }
 
               <button
                 type="button"
@@ -93,6 +107,8 @@ export function AppHeader() {
                 <ShoppingCart size={20} />
               </NavLink>
             </div>
+
+
           </div>
         </div>
       </nav>
