@@ -81,7 +81,7 @@ The app is deployed on **Netlify**.
 - **Build command**: `npm run build`
 - **Publish directory**: `build` (Create React App default)
 - Connect your repo in the Netlify dashboard and use the settings above to deploy.
-- **Live**: https://your-app-name.netlify.app
+- **Live**: [learnify](https://frolicking-shortbread-798dd6.netlify.app/)
 
 ---
 
