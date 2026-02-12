@@ -33,8 +33,8 @@ button.btn.btn-learnify-enroll {
 
 a.btn.btn-learnify-enroll:hover,
 button.btn.btn-learnify-enroll:hover {
-  background-color: #8269e8;
-  border-color: #8269e8;
+  background-color: #412c94;
+  border-color: #412c94;
   color: #fff;
 }
 
@@ -62,3 +62,35 @@ button.btn.btn-learnify-login:hover {
   outline: none;
 }
 
+/* Course detail page – theme purple */
+.course-detail-hero {
+  background-color: var(--learnify-purple) !important;
+}
+.course-detail-hero .btn-light {
+  color: var(--learnify-purple);
+}
+.course-detail-sidebar-preview {
+  background-color: rgba(130, 105, 232, 0.25);
+}
+.course-detail-page .btn-learnify-primary {
+  background-color: var(--learnify-purple);
+  border-color: var(--learnify-purple);
+  color: #fff;
+}
+.course-detail-page .btn-learnify-primary:hover {
+  background-color: #6b5ad4;
+  border-color: #6b5ad4;
+  color: #fff;
+}
+.course-detail-page .btn-outline-learnify {
+  border-color: var(--learnify-purple);
+  color: var(--learnify-purple);
+}
+.course-detail-page .btn-outline-learnify:hover {
+  background-color: rgba(130, 105, 232, 0.1);
+  border-color: var(--learnify-purple);
+  color: var(--learnify-purple);
+}
+.course-detail-page .text-learnify {
+  color: var(--learnify-purple);
+}

@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }){
     const [token, setToken] = useState(null);
     const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
@@ -36,6 +36,22 @@ export function AuthProvider({ children }){
         setUser(null);
     };
 
+    const updateProfile = ({ name, password }) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+
+      const next = {
+        ...prev,
+        name: typeof name === "string" ? name : prev.name,
+        // ⚠️ mock: não faça isso em produção
+        ...(typeof password === "string" && password.length > 0 ? { password } : {}),
+      };
+
+      localStorage.setItem("user", JSON.stringify(next));
+      return next;
+    });
+    };
+
     return (
         <AuthContext.Provider
         value={{
@@ -44,6 +60,7 @@ export function AuthProvider({ children }){
             isLoading,
             login,
             logout,
+            updateProfile,
             isAuthenticated: !!token,
         }}
         >

@@ -1,0 +1,84 @@
+
+.login-page {
+  background: #f6f7f9;
+  min-height: calc(100vh - 72px);
+}
+
+.login-card {
+  border: 1px solid #8269e8;
+  border-radius: 14px;
+}
+
+.login-input {
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+}
+
+.login-btn {
+  border-radius: 10px !important;
+  padding: 0.65rem 0.9rem !important;
+  background-color: #8269e8 !important;
+  color: white !important;
+}
+.login-btn:hover {
+  border-radius: 10px !important;
+  padding: 0.65rem 0.9rem !important;
+  background-color: #412c94 !important;
+  color: white !important;
+}
+
+.login-link {
+  color: #8269e8 !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+}
+
+.login-link:hover {
+  color: #8269e8 !important; 
+  text-decoration: underline !important;
+}
+
+
+/* ===== COURSES HOME ===== */
+.courses-hero {
+  background: linear-gradient(
+    135deg,
+    #8269e8,
+    #9f65f3,
+    #aa56f5);
+}
+
+.courses-filter-card {
+  border-radius: 1.25rem;
+}
+
+.course-card {
+  overflow: hidden;
+}
+
+.course-thumb {
+  height: 110px;
+  background: linear-gradient(
+    135deg,
+    #8269e8,
+    #9f65f3,
+    #aa56f5);
+}
+
+.course-badge {
+  background: #5b06a5c9;
+  color: #ffffff;
+  border: 1px solid rgba(91, 79, 222, 0.18);
+  font-weight: 600;
+}
+
+.course-title {
+  line-height: 1.2;
+}
+
+.course-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
