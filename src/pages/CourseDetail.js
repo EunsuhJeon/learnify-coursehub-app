@@ -92,9 +92,10 @@ export default function CourseDetail() {
             navigate("/login");
             return;
         }
-
+        setEnrolling(true);
         addToCart(course);
         navigate("/cart");
+        setEnrolling(false);
         /*
         try {
             setEnrolling(true);
