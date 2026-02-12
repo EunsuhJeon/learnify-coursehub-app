@@ -54,9 +54,9 @@ src/
 
 | Developer | Main Focus | Responsibilities | Key Contributions |
 |-----------|------------|------------------|-------------------|
-| **Dev 1** | Routing & Auth | - Main routes & layout<br>- Login/Register flow<br>- Global Footer | Core app structure<br>Secure auth system<br>Consistent layout |
-| **Dev 2** | UI/UX Design | - My Courses sidebar<br>- Profile/Courses UI<br>- Reviews section | User-friendly layouts<br>Progress tracking UI<br>Review experience |
-| **Dev 3** | Business Logic | - Add to Cart system<br>- Purchase state logic<br>- Mock API integration | Cart/purchase flow<br>Smart button states<br>Error handling |
+| **Eunsuh** | Routing & Auth | - Main routes & layout<br>- Login/Register flow<br>- Global Footer | Core app structure<br>Secure auth system<br>Consistent layout |
+| **Isabella** | UI/UX Design | - My Courses sidebar<br>- Profile/Courses UI<br>- Reviews section | User-friendly layouts<br>Progress tracking UI<br>Review experience |
+| **Santiago** | Business Logic | - Add to Cart system<br>- Purchase state logic<br>- Mock API integration | Cart/purchase flow<br>Smart button states<br>Error handling |
 
 ---
 
