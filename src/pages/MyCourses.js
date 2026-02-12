@@ -5,6 +5,8 @@ import { getMyEnrollments } from "../api/enrollmentsApi";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./MyCourses.css";
 import ProfilePanel from "../components/ProfilePanel";
+import { getThemeImage } from "../utils/courseImages";
+
 
 
 
@@ -206,16 +208,12 @@ export default function MyCourses() {
                                 className="card myc-course-card border-0 shadow-sm rounded-4"
                               >
                                 {/* Thumb img */}
-                                {course?.imageUrl ? (
-                                  <img
-                                    src={course.imageUrl}
-                                    alt={course.title}
-                                    className="myc-thumb-img rounded-top-4"
-                                    loading="lazy"
-                                  />
-                                ) : (
-                                  <div className="myc-thumb rounded-top-4" />
-                                )}
+                                <img
+                                  src={getThemeImage(course?.theme ?? "General")}
+                                  alt={`${course?.theme ?? "General"} course`}
+                                  className="myc-thumb-img rounded-top-4"
+                                  loading="lazy"
+                                />
 
                                 <div className="card-body p-3 d-flex flex-column">
                                   <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
@@ -256,12 +254,15 @@ export default function MyCourses() {
                                       to={`/courses/${course.id}`}
                                       className="btn btn-outline-secondary btn-sm flex-grow-1"
                                     >
-                                      Go to course
+                                      Course Details
                                     </NavLink>
 
-                                    <button type="button" className="btn btn-dark btn-sm flex-grow-1">
+                                    <NavLink
+                                      to={`/courses/${course.id}/learn`}
+                                      className="btn btn-dark btn-sm flex-grow-1"
+                                    >
                                       Continue
-                                    </button>
+                                    </NavLink>
                                   </div>
                                 </div>
                               </div>
