@@ -8,6 +8,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { isUserEnrolled } from "../api/enrollmentsApi";
 import { useCart } from "../contexts/CartContext";
+import previewThumb from "../assets/previews/course-thumb.jpg";
+import previewGif from "../assets/previews/course-preview.gif";
+
 
 export default function CourseDetail() {
     const { id } = useParams();
@@ -22,6 +25,8 @@ export default function CourseDetail() {
 
     const course = getCourseById(id);
     const alreadyEnrolled = isAuthenticated && user ? isUserEnrolled(course?.id, user.id) : false;
+
+    const [isHoverPreview, setIsHoverPreview] = useState(false);
 
 
     const { cart, addToCart } = useCart();
@@ -268,9 +273,19 @@ export default function CourseDetail() {
                         <div className="col-lg-4">
                             <div className="card shadow-sm border-0 rounded-3 sticky-lg-top">
                                 <div className="card-body p-4">
-                                    <div className="ratio ratio-16x9 course-detail-sidebar-preview rounded-3 mb-3 d-flex align-items-center justify-content-center">
-                                        <span className="text-muted">Preview</span>
+                                    <div
+                                    className="ratio ratio-16x9 rounded-3 overflow-hidden position-relative mb-3"
+                                    onMouseEnter={() => setIsHoverPreview(true)}
+                                    onMouseLeave={() => setIsHoverPreview(false)}
+                                    style={{ cursor: "pointer" }}
+                                    >
+                                    <img
+                                        src={isHoverPreview ? previewGif : previewThumb}
+                                        alt={`${course.title} preview`}
+                                        className="w-100 h-100 object-fit-cover"
+                                    />
                                     </div>
+
                                     <div className="mb-3">
                                         <span className="fs-4 fw-bold">{priceDisplay}</span>
                                         {course.priceNote && <p className="small text-secondary mb-0">{course.priceNote}</p>}
