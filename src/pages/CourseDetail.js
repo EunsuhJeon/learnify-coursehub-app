@@ -2,7 +2,6 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCourses } from "../contexts/CoursesContext";
 import { getThemeImage } from "../utils/courseImages";
 
-import { enrollInCourse } from "../api/enrollmentsApi";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -18,7 +17,7 @@ export default function CourseDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user, isAuthenticated } = useAuth();
-    const [enrollError, setEnrollError] = useState("");
+    // const [enrollError, setEnrollError] = useState("");
     const [enrolling, setEnrolling] = useState(false);
     const { getCourseById, isLoading, error, fetchCourses } = useCourses();
     useEffect(() => {
@@ -87,7 +86,7 @@ export default function CourseDetail() {
     const learningOutcomes = course.learningOutcomes || [];
 
     const handleEnroll = async () => {
-        setEnrollError("");
+        // setEnrollError("");
 
         if (!isAuthenticated) {
             navigate("/login");
